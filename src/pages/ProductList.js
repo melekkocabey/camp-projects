@@ -1,10 +1,16 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Icon, Menu, Table } from 'semantic-ui-react'
+import { Button, Checkbox, Icon, Menu, Table } from 'semantic-ui-react'
 import { ProductService } from '../services/productService';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../store/actions/cartActions';
 
-export default function Ürünler() {
+export default function ProductList() {
+
+    const dispatch = useDispatch()/* BİR FONKSİYONU ÇAĞIRMAK İÇİN useDispatch kullanılır */
+
+
     const [products, setProducts] = useState([]);
     //lifecyle hook
     useEffect(() => {
@@ -13,6 +19,12 @@ export default function Ürünler() {
             result => setProducts(result.data.products)
         )
     }, [])//companent yüklendiğinde yapılması istenilen ne ise ilk bloğa yaz
+
+    const handleAddToCart = (product) => {
+        console.log(product);
+        dispatch(addToCart(product))
+
+    }
     return (//componentDidMount 
         <div>
             <Table celled>
@@ -23,6 +35,7 @@ export default function Ürünler() {
                         <Table.HeaderCell>Stok Adeti</Table.HeaderCell>
                         <Table.HeaderCell>Açıklama</Table.HeaderCell>
                         <Table.HeaderCell>Kategori</Table.HeaderCell>
+                        <Table.HeaderCell></Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
@@ -34,7 +47,8 @@ export default function Ürünler() {
                                 <Table.Cell>{product.price}</Table.Cell>
                                 <Table.Cell>{product.stock}</Table.Cell>
                                 <Table.Cell>{product.description}</Table.Cell>
-                                <Table.Cell>{product.category}</Table.Cell>
+                                <Table.Cell>{product.category} </Table.Cell>
+                                <Table.Cell><Button onClick={() => handleAddToCart(product)}>Sepete Ekle</Button></Table.Cell>
                             </Table.Row>
                         ))
                     }
