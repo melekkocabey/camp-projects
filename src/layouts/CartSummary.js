@@ -1,11 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { Dropdown, Label } from 'semantic-ui-react';
+import { Button, Dropdown, Label } from 'semantic-ui-react';
+import { removeFromCart } from '../store/actions/cartActions';
 
 export default function CartSummary() {
     const { cartItems } = useSelector(state => state.cart);
-    console.log(cartItems);
+    const dispatch = useDispatch();
+    const removeItemFromCart = (productId) => {
+        dispatch(removeFromCart(productId));
+    };
     return (
         <div>
             <Dropdown item text='Sepetiniz'>
@@ -16,6 +20,9 @@ export default function CartSummary() {
                             <Label>
                                 {cartItem.product.price}
                             </Label>
+                            <Button onClick={() => removeItemFromCart(cartItem.product.id)}>
+                                Sepetten Çıkar
+                            </Button>
                         </Dropdown.Item>
                     ))}
                     <Dropdown.Divider />

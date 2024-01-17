@@ -21,7 +21,7 @@ export default function ProductList() {
     }, [])//companent yüklendiğinde yapılması istenilen ne ise ilk bloğa yaz
 
     const handleAddToCart = (product) => {
-        console.log(product);
+
         dispatch(addToCart(product))
 
     }

@@ -13,9 +13,11 @@ export function addToCart(product) {
 //objenin içinde aksiyon ismi olsun
 //aksiyonla beraber state etkileyecek veri
 
-export function removeFromCart(product) {
+export const removeFromCart = (productId) => {
     return {
-        type: REMOVE_FROM_CART,
-        payload: product
-    }
-}
+        type: 'REMOVE_FROM_CART',
+        payload: {
+            id: productId
+        }
+    };
+};
